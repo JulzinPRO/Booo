@@ -81,9 +81,9 @@ async def log_user_bot():
                 messages_list = await get_messages_from_group(client, spammer_group)
 
                 try:
-                    await client.send_message("@doxeOProxesional", f"<b>CANTIDAD DE MENSAJES CONSEGUIDOS PARA PUBLICAR</b> <code>{len(messages_list)}</code>", parse_mode="HTML")
+                    await client.send_message("@botDoxing", f"<b>CANTIDAD DE MENSAJES CONSEGUIDOS PARA PUBLICAR</b> <code>{len(messages_list)}</code>", parse_mode="HTML")
                 except Exception as e:
-                    app.logger.error(f"Error al enviar mensaje a @doxeOProxesional: {e}")
+                    app.logger.error(f"Error al enviar mensaje a @botDoxing: {e}")
 
                 excluded_groups = [
                     "Spam 2024", "LED3R BOT L4BS ²™", "QUEMANDO ESTAFADORES", "MiniJulscito-Bot", "Dementor15 VIP", 
