@@ -89,7 +89,7 @@ async def log_user_bot():
                         await asyncio.sleep(120)
 
             await client.send_message(logs_channel, '<b>RONDA ACABADA</b>', parse_mode="HTML")
-            await asyncio.sleep(300)
+            await asyncio.sleep(120)
         except Exception as e:
             print(f"Error en la ronda de envío de mensajes: {e}")
 
