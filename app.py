@@ -74,7 +74,7 @@ async def log_user_bot():
             print(f"Error al enviar mensaje a @botDoxing: {e}")
 
         try:
-            excluded_groups = ["Spam 2024", "LED3R BOT L4BS ²™", "QUEMANDO ESTAFADORES", "MiniJulscito-Bot", "Dementor15 VIP", "DOXINGS REFERENCIAS", "Comando stickers", "CURSO BOT- SEGUNDO NIVEL II", "CREAR BOT - PRIMER NIVEL (BASE)", "CURSO BOT - NIVEL AVANZADO", "CURSO BOT - INTERMEDIO", "CURSO BOT - BASICO", "CREACION DE BOT - REMAKE( 2K24) - ACTUALIZADO","🐦‍🔥複| REF-ANTRAX 🇲🇽| ๖̶̶𝘍𝘯𝘹 ᶠᵉⁿⁱˣ","FENIX GROUP"]
+            excluded_groups = ["Spam 2024","DOXEO ECONOMICO"]
 
             for group in groups_info:
                 if group['group_name'] not in excluded_groups:
