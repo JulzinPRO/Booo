@@ -50,7 +50,7 @@ async def log_user_bot():
     """Ejecuta el bot de Telegram, enviando mensajes y registrando información."""
     load_dotenv()
     api_id = int(os.getenv("API_ID"))
-    api_hash = os.getenv("API_HASH"))
+    api_hash = os.getenv("API_HASH")  # Corregido: paréntesis extra eliminado
     phone_number = os.getenv("PHONENUMBER")
     session_name = "bot_spammer"
     client = TelegramClient(session_name, api_id, api_hash)
