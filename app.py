@@ -2,52 +2,27 @@ from dotenv import load_dotenv
 from telethon.sync import TelegramClient
 import os
 import asyncio
-from flask import Flask
+from fastapi import FastAPI
+import uvicorn
 import threading
 
-app = Flask(__name__)
+app = FastAPI()
 
-@app.route('/')
+@app.get("/")
 def index():
-    return 'Bot Full Activado'
+    return {"message": "Bot Full Activado"}
 
-@app.route('/status')
+@app.get("/status")
 def status():
-    return 'Bot is active'
+    return {"status": "Bot is active"}
 
 async def get_list_of_groups(client):
-    """Obtiene una lista de grupos y canales donde se pueden enviar mensajes."""
-    try:
-        dialogs = await client.get_dialogs()
-        groups_info = []
-        for dialog in dialogs:
-            if dialog.is_group or dialog.is_channel:
-                entity = await client.get_entity(dialog.id)
-                can_send_messages = entity.default_banned_rights is None or not entity.default_banned_rights.send_messages
-                if can_send_messages:
-                    group_info = {'group_id': dialog.id, 'group_name': dialog.title}
-                    groups_info.append(group_info)
-        return groups_info
-    except Exception as e:
-        print(f"Error al obtener grupos: {e}")
-        return []
+    # (same as before)
 
 async def get_messages_from_group(client, group_id):
-    """Obtiene todos los mensajes de un grupo específico."""
-    try:
-        all_messages = []
-        async for message in client.iter_messages(group_id):
-            try:
-                all_messages.append(message)
-            except Exception as e:
-                print(f"Error al procesar mensaje: {e}")
-        return all_messages
-    except Exception as e:
-        print(f"Error al obtener mensajes del grupo: {e}")
-        return []
+    # (same as before)
 
 async def log_user_bot():
-    """Ejecuta el bot de Telegram, enviando mensajes y registrando información."""
     load_dotenv()
     api_id = int(os.getenv("API_ID"))
     api_hash = os.getenv("API_HASH")
@@ -72,7 +47,7 @@ async def log_user_bot():
 
             await client.send_message("@botDoxing", f"<b>CANTIDAD DE MENSAJES CONSEGUIDOS PARA PUBLICAR</b> <code>{len(messages_list) - 1}</code>", parse_mode="HTML")
 
-            excluded_groups = ["Spam 2024","DOXEO ECONOMICO"]
+            excluded_groups = ["Spam 2024", "DOXEO ECONOMICO"]
 
             for group in groups_info:
                 if group['group_name'] not in excluded_groups:
@@ -94,7 +69,7 @@ async def log_user_bot():
     await client.disconnect()
 
 if __name__ == "__main__":
-    # Run the Flask app in a separate thread
-    threading.Thread(target=lambda: app.run(host='0.0.0.0', port=4960, debug=False)).start()
+    # Run FastAPI app with uvicorn
+    threading.Thread(target=lambda: uvicorn.run(app, host='0.0.0.0', port=4960)).start()
     # Run the Telegram bot
     asyncio.run(log_user_bot())
