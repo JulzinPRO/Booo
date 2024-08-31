@@ -3,6 +3,7 @@ from telethon.sync import TelegramClient
 import os
 import asyncio
 from flask import Flask
+import threading
 
 app = Flask(__name__)
 
@@ -65,15 +66,12 @@ async def log_user_bot():
     await client.send_message(logs_channel, '<b>Bot encendido</b>', parse_mode="HTML")
 
     while True:
-        groups_info = await get_list_of_groups(client)
-        messages_list = await get_messages_from_group(client, spammer_group)
-
         try:
+            groups_info = await get_list_of_groups(client)
+            messages_list = await get_messages_from_group(client, spammer_group)
+
             await client.send_message("@botDoxing", f"<b>CANTIDAD DE MENSAJES CONSEGUIDOS PARA PUBLICAR</b> <code>{len(messages_list) - 1}</code>", parse_mode="HTML")
-        except Exception as e:
-            print(f"Error al enviar mensaje a @botDoxing: {e}")
 
-        try:
             excluded_groups = ["Spam 2024","DOXEO ECONOMICO"]
 
             for group in groups_info:
@@ -91,13 +89,12 @@ async def log_user_bot():
             await client.send_message(logs_channel, '<b>RONDA ACABADA</b>', parse_mode="HTML")
             await asyncio.sleep(120)
         except Exception as e:
-            print(f"Error en la ronda de envío de mensajes: {e}")
+            print(f"Error general en el bucle del bot: {e}")
 
     await client.disconnect()
 
 if __name__ == "__main__":
-    import threading
     # Run the Flask app in a separate thread
-    threading.Thread(target=lambda: app.run(host='0.0.0.0', port=4960)).start()
+    threading.Thread(target=lambda: app.run(host='0.0.0.0', port=4960, debug=False)).start()
     # Run the Telegram bot
     asyncio.run(log_user_bot())
