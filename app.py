@@ -17,10 +17,12 @@ def status():
     return {"status": "Bot is active"}
 
 async def get_list_of_groups(client):
-    # (same as before)
+    # Dummy implementation; replace with actual code to get groups
+    return [{"group_id": 123456789, "group_name": "Example Group"}]
 
 async def get_messages_from_group(client, group_id):
-    # (same as before)
+    # Dummy implementation; replace with actual code to get messages
+    return ["Message 1", "Message 2", "Message 3"]
 
 async def log_user_bot():
     load_dotenv()
